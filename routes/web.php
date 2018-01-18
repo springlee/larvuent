@@ -14,3 +14,20 @@
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/user/repos', function (\Illuminate\Http\Request $request) {
+    try {
+        $client = new GuzzleHttp\Client();
+        $response = $client->request('GET', 'https://api.github.com/user/repos', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Authorization' => $request->header('Authorization'),
+            ],
+        ]);
+    } catch ( GuzzleHttp\Exception\ClientException $e) {
+        $response = $e->getResponse();
+    }
+    return response(json_decode((string)$response->getBody(),true),$response->getStatusCode());
+});
+
+

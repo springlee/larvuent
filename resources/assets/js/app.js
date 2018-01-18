@@ -15,19 +15,23 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-//Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-import App from './components/App.vue'; // 引入Hello 组件
+import App from './components/github/App.vue';
+import router from './router/router.js';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import router from './router/index.js';
-import axios from 'axios'
-Vue.prototype.$http = axios
+import store from './store/store'
+import axios from './http/http.js'
+
+
+Vue.prototype.axios = axios;
 
 Vue.use(ElementUI);
+
 const app = new Vue({
     el: '#app',
-    router:router,
+    axios,
+    router,
+    store,
     render: h => h(App)
 });
 
